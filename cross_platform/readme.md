@@ -1,5 +1,5 @@
-Copyright 2025 Alexadre Henrique Pereira Rodrigues
+Copyright 2025 Alexandre Henrique Pereira Rodrigues
 
-# CSD-228 Alexadre Henrique Pereira Rodrigues - Cross Platform
+# CSD-228 Alexandre Henrique Pereira Rodrigues - Cross Platform
 
 TBD

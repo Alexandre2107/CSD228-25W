@@ -1,8 +1,6 @@
-package dev.alexrodrigues.labs_csd_228.dataLayerTest
+package dev.alexrodrigues.labs_csd_228.data.repository
 
 import dev.alexrodrigues.labs_csd_228.data.Calendar
-import dev.alexrodrigues.labs_csd_228.data.repository.CalendarRepository
-import dev.alexrodrigues.labs_csd_228.data.repository.ShiftRepository
 import kotlinx.coroutines.runBlocking
 import org.junit.Assert.assertEquals
 import org.junit.Before

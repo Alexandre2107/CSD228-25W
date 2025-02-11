@@ -22,7 +22,7 @@ class MainScreenTest {
     val composeTestRule = createComposeRule()
 
     @Test
-    fun testThemeSwitcher() {
+    fun testThemeSwitcherDarkMode() {
         val userRepository = UserRepository()
         val shiftRepository = ShiftRepository()
         val calendarRepository = CalendarRepository(shiftRepository)
@@ -41,5 +41,27 @@ class MainScreenTest {
 
         // Check if the darkTheme is updated
         assertTrue("Theme should be updated to dark mode", darkTheme.value)
+    }
+
+    @Test
+    fun testThemeSwitcherLightMode() {
+        val userRepository = UserRepository()
+        val shiftRepository = ShiftRepository()
+        val calendarRepository = CalendarRepository(shiftRepository)
+        val darkTheme = mutableStateOf(false)
+
+        composeTestRule.setContent {
+            MainScreen(
+                darkTheme = darkTheme.value,
+                onThemeUpdated = { darkTheme.value = !darkTheme.value },
+                viewModel = MainViewModel(userRepository, shiftRepository, calendarRepository)
+            )
+        }
+
+        // Click the theme switcher
+        composeTestRule.onNodeWithContentDescription("Light Mode Icon").performClick()
+
+        // Check if the Light Mode is updated
+        assertTrue("Theme should be updated to light mode", darkTheme.value)
     }
 }

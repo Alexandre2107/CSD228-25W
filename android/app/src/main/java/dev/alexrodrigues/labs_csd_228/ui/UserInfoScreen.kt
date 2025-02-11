@@ -13,21 +13,24 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.unit.dp
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.ui.platform.testTag
 import androidx.lifecycle.viewmodel.compose.viewModel
 import dev.alexrodrigues.labs_csd_228.data.User
 import dev.alexrodrigues.labs_csd_228.data.Shift
 
 /**
- * Function to display and update user information
+ * Function to display user information and shifts
  *
- * @param viewModel The ViewModel for managing UI-related data
+ * @param viewModel The ViewModel that provides user and shift data
  */
 @Composable
 fun UserInfoScreen(viewModel: MainViewModel = viewModel()) {
+    // Collecting state from the ViewModel
     val user by viewModel.user.collectAsState()
     val shifts by viewModel.shifts.collectAsState()
     val calendar by viewModel.calendar.collectAsState()
 
+    // Mutable states for user information
     var name by remember { mutableStateOf(user?.name ?: "") }
     var email by remember { mutableStateOf(user?.email ?: "") }
     var phone by remember { mutableStateOf(user?.phone ?: "") }
@@ -35,15 +38,16 @@ fun UserInfoScreen(viewModel: MainViewModel = viewModel()) {
 
     var oldUser by remember { mutableStateOf(user) }
 
+    // Column layout to organize items vertically
     Column(
         modifier = Modifier
             .padding(16.dp)
-            .verticalScroll(rememberScrollState())
+            .verticalScroll(rememberScrollState()) // Enable vertical scrolling
     ) {
-        // Display user information header
+        // Displaying user information header
         Text("User Information", style = MaterialTheme.typography.displaySmall, color = MaterialTheme.colorScheme.onSurface)
 
-        // Input field for user name
+        // Text field for name input
         BasicTextField(
             value = name,
             onValueChange = { name = it },
@@ -51,12 +55,13 @@ fun UserInfoScreen(viewModel: MainViewModel = viewModel()) {
                 .fillMaxWidth()
                 .padding(8.dp)
                 .border(1.dp, Color.Gray)
-                .padding(8.dp),
+                .padding(8.dp)
+                .testTag("NameInput"), // Tag for testing
             textStyle = MaterialTheme.typography.bodyLarge.copy(color = MaterialTheme.colorScheme.onSurface),
             cursorBrush = SolidColor(MaterialTheme.colorScheme.onSurface)
         )
 
-        // Input field for user email
+        // Text field for email input
         BasicTextField(
             value = email,
             onValueChange = { email = it },
@@ -64,12 +69,13 @@ fun UserInfoScreen(viewModel: MainViewModel = viewModel()) {
                 .fillMaxWidth()
                 .padding(8.dp)
                 .border(1.dp, Color.Gray)
-                .padding(8.dp),
+                .padding(8.dp)
+                .testTag("EmailInput"), // Tag for testing
             textStyle = MaterialTheme.typography.bodyLarge.copy(color = MaterialTheme.colorScheme.onSurface),
             cursorBrush = SolidColor(MaterialTheme.colorScheme.onSurface)
         )
 
-        // Input field for user phone
+        // Text field for phone input
         BasicTextField(
             value = phone,
             onValueChange = { phone = it },
@@ -77,12 +83,13 @@ fun UserInfoScreen(viewModel: MainViewModel = viewModel()) {
                 .fillMaxWidth()
                 .padding(8.dp)
                 .border(1.dp, Color.Gray)
-                .padding(8.dp),
+                .padding(8.dp)
+                .testTag("PhoneInput"), // Tag for testing
             textStyle = MaterialTheme.typography.bodyLarge.copy(color = MaterialTheme.colorScheme.onSurface),
             cursorBrush = SolidColor(MaterialTheme.colorScheme.onSurface)
         )
 
-        // Input field for user accessibility requirements
+        // Text field for accessibility requirements input
         BasicTextField(
             value = accessibilityRequirements,
             onValueChange = { accessibilityRequirements = it },
@@ -90,7 +97,8 @@ fun UserInfoScreen(viewModel: MainViewModel = viewModel()) {
                 .fillMaxWidth()
                 .padding(8.dp)
                 .border(1.dp, Color.Gray)
-                .padding(8.dp),
+                .padding(8.dp)
+                .testTag("AccessibilityRequirementsInput"), // Tag for testing
             textStyle = MaterialTheme.typography.bodyLarge.copy(color = MaterialTheme.colorScheme.onSurface),
             cursorBrush = SolidColor(MaterialTheme.colorScheme.onSurface)
         )
@@ -105,7 +113,7 @@ fun UserInfoScreen(viewModel: MainViewModel = viewModel()) {
 
         Spacer(modifier = Modifier.height(16.dp))
 
-        // Display old user information
+        // Displaying old user information
         Text("Old User Information", style = MaterialTheme.typography.displaySmall, color = MaterialTheme.colorScheme.onSurface)
         user?.let {
             Text("Name: ${it.name}", color = MaterialTheme.colorScheme.onSurface)
@@ -116,16 +124,16 @@ fun UserInfoScreen(viewModel: MainViewModel = viewModel()) {
 
         Spacer(modifier = Modifier.height(16.dp))
 
-        // Display shifts information
+        // Displaying shifts information
         Text("Shifts Information", style = MaterialTheme.typography.displaySmall, color = MaterialTheme.colorScheme.onSurface)
-        shifts.forEach { shift ->
+        shifts.forEachIndexed { index, shift ->
             var shiftLocation by remember { mutableStateOf(shift.location) }
             var shiftDescription by remember { mutableStateOf(shift.description) }
 
             Column(modifier = Modifier.padding(8.dp)) {
                 Text("Shift ID: ${shift.id}", color = MaterialTheme.colorScheme.onSurface)
 
-                // Input field for shift location
+                // Text field for shift location input
                 BasicTextField(
                     value = shiftLocation,
                     onValueChange = { shiftLocation = it },
@@ -133,12 +141,13 @@ fun UserInfoScreen(viewModel: MainViewModel = viewModel()) {
                         .fillMaxWidth()
                         .padding(8.dp)
                         .border(1.dp, Color.Gray)
-                        .padding(8.dp),
+                        .padding(8.dp)
+                        .testTag("ShiftLocationInput_$index"), // Tag for testing
                     textStyle = MaterialTheme.typography.bodyLarge.copy(color = MaterialTheme.colorScheme.onSurface),
                     cursorBrush = SolidColor(MaterialTheme.colorScheme.onSurface)
                 )
 
-                // Input field for shift description
+                // Text field for shift description input
                 BasicTextField(
                     value = shiftDescription,
                     onValueChange = { shiftDescription = it },
@@ -146,15 +155,19 @@ fun UserInfoScreen(viewModel: MainViewModel = viewModel()) {
                         .fillMaxWidth()
                         .padding(8.dp)
                         .border(1.dp, Color.Gray)
-                        .padding(8.dp),
+                        .padding(8.dp)
+                        .testTag("ShiftDescriptionInput_$index"), // Tag for testing
                     textStyle = MaterialTheme.typography.bodyLarge.copy(color = MaterialTheme.colorScheme.onSurface),
                     cursorBrush = SolidColor(MaterialTheme.colorScheme.onSurface)
                 )
 
                 // Button to update shift information
-                Button(onClick = {
-                    viewModel.updateShift(Shift(shift.id, shift.userId, shift.startTime, shift.endTime, shiftLocation, shiftDescription))
-                }) {
+                Button(
+                    onClick = {
+                        viewModel.updateShift(Shift(shift.id, shift.userId, shift.startTime, shift.endTime, shiftLocation, shiftDescription))
+                    },
+                    modifier = Modifier.testTag("UpdateShiftButton_$index") // Tag for testing
+                ) {
                     Text("Update Shift", color = MaterialTheme.colorScheme.onPrimary)
                 }
             }
@@ -162,7 +175,7 @@ fun UserInfoScreen(viewModel: MainViewModel = viewModel()) {
 
         Spacer(modifier = Modifier.height(16.dp))
 
-        // Display calendar information
+        // Displaying calendar information
         Text("Calendar Information", style = MaterialTheme.typography.displaySmall, color = MaterialTheme.colorScheme.onSurface)
         calendar?.shiftsByDate?.forEach { (date, shifts) ->
             Text("Date: $date", color = MaterialTheme.colorScheme.onSurface)

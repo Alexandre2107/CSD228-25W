@@ -1,13 +1,13 @@
-package dev.alexrodrigues.labs_csd_228.dataLayerTest
+package dev.alexrodrigues.labs_csd_228.data.repository
 
 import dev.alexrodrigues.labs_csd_228.data.User
-import dev.alexrodrigues.labs_csd_228.data.repository.UserRepository
 import kotlinx.coroutines.runBlocking
 import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
 
 class UserRepositoryTest {
+
     private lateinit var userRepository: UserRepository
 
     @Before
@@ -17,8 +17,9 @@ class UserRepositoryTest {
 
     @Test
     fun testGetUser() = runBlocking {
-        val user: User = userRepository.getUser()
+        val user = userRepository.getUser()
         assertEquals("user1", user.id)
+        assertEquals("John Doe", user.name)
     }
 
     @Test

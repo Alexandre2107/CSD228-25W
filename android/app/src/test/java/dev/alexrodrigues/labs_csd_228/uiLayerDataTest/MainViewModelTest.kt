@@ -1,4 +1,4 @@
-package dev.alexrodrigues.labs_csd_228.uiLayerTest
+package dev.alexrodrigues.labs_csd_228.uiLayerDataTest
 
 import dev.alexrodrigues.labs_csd_228.data.User
 import dev.alexrodrigues.labs_csd_228.data.repository.CalendarRepository

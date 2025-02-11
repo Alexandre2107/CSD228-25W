@@ -1,7 +1,6 @@
-package dev.alexrodrigues.labs_csd_228.dataLayerTest
+package dev.alexrodrigues.labs_csd_228.data.repository
 
 import dev.alexrodrigues.labs_csd_228.data.Shift
-import dev.alexrodrigues.labs_csd_228.data.repository.ShiftRepository
 import kotlinx.coroutines.runBlocking
 import org.junit.Assert.assertEquals
 import org.junit.Before
@@ -10,6 +9,7 @@ import java.time.Duration
 import java.time.Instant
 
 class ShiftRepositoryTest {
+
     private lateinit var shiftRepository: ShiftRepository
 
     @Before
@@ -19,13 +19,13 @@ class ShiftRepositoryTest {
 
     @Test
     fun testGetAllShifts() = runBlocking {
-        val shifts: List<Shift> = shiftRepository.getAllShifts()
+        val shifts = shiftRepository.getAllShifts()
         assertEquals(2, shifts.size)
     }
 
     @Test
     fun testGetUpcomingShifts() = runBlocking {
-        val upcomingShifts: List<Shift> = shiftRepository.getUpcomingShifts()
+        val upcomingShifts = shiftRepository.getUpcomingShifts()
         assertEquals(1, upcomingShifts.size)
     }
 
@@ -34,14 +34,14 @@ class ShiftRepositoryTest {
         val shift = Shift(
             id = "shift1",
             userId = "user1",
-            startTime = Instant.now().plus(Duration.ofDays(2)),
-            endTime = Instant.now().plus(Duration.ofDays(3)),
-            location = "Updated Location",
-            description = "Updated Description"
+            startTime = Instant.now(),
+            endTime = Instant.now().plus(Duration.ofDays(1) + Duration.ofHours(8)),
+            location = "Updated Office",
+            description = "Updated Morning Shift"
         )
         shiftRepository.updateShift(shift)
         val updatedShift = shiftRepository.getAllShifts().first { it.id == "shift1" }
-        assertEquals("Updated Location", updatedShift.location)
-        assertEquals("Updated Description", updatedShift.description)
+        assertEquals("Updated Office", updatedShift.location)
+        assertEquals("Updated Morning Shift", updatedShift.description)
     }
 }

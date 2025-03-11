@@ -1,7 +1,7 @@
 package dev.alexrodrigues.labs_csd_228.data.repository
 
 import dev.alexrodrigues.labs_csd_228.data.Calendar
-import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
@@ -18,7 +18,7 @@ class CalendarRepositoryTest {
     }
 
     @Test
-    fun testGetCalendar() = runBlocking {
+    fun testGetCalendar() = runTest {
         val calendar: Calendar = calendarRepository.getCalendar()
         val shifts = shiftRepository.getAllShifts()
         val shiftsByDate = shifts.groupBy { shift ->

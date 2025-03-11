@@ -8,7 +8,7 @@ import java.time.ZoneId
  *
  * @property shiftRepository The repository for managing shifts
  */
-open class CalendarRepository(private val shiftRepository: ShiftRepository) {
+class CalendarRepository(private val shiftRepository: ShiftRepository) {
     /**
      * Retrieves the calendar with shifts grouped by date
      *

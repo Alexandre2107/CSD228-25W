@@ -32,4 +32,10 @@ class ModelsTest {
         val calendar = Calendar(mapOf(LocalDate.now() to listOf(shift)))
         assertEquals(1, calendar.shiftsByDate.size)
     }
+
+    @Test
+    fun testSettings() {
+        val settings = Settings(darkMode = true)
+        assertEquals(true, settings.darkMode)
+    }
 }

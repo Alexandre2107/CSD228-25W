@@ -21,35 +21,54 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Text
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.sp
+import androidx.navigation.compose.rememberNavController
 import dev.alexrodrigues.labs_csd_228.R
-import dev.alexrodrigues.labs_csd_228.ui.MainViewModel
+import dev.alexrodrigues.labs_csd_228.ui.viewModel.SettingsViewModel
+import dev.alexrodrigues.labs_csd_228.ui.viewModel.ShiftViewModel
+import dev.alexrodrigues.labs_csd_228.ui.viewModel.UserViewModel
 
 /**
- * Main screen of the app.
+ * Main screen of the app
  *
  * @param darkTheme Boolean indicating if dark theme should be used
  * @param onThemeUpdated Function that updates the theme
- * @param viewModel The view model for the screen to look after data
+ * @param userViewModel The ViewModel for user data
+ * @param shiftViewModel The ViewModel for shift data
+ * @param settingsViewModel The ViewModel for settings data
  */
 @Composable
-fun MainScreen(darkTheme: Boolean, onThemeUpdated: () -> Unit, viewModel: MainViewModel) {
-    // A column to arrange items vertically
+fun MainScreen(
+    darkTheme: Boolean,
+    onThemeUpdated: () -> Unit,
+    userViewModel: UserViewModel,
+    shiftViewModel: ShiftViewModel,
+    settingsViewModel: SettingsViewModel,
+) {
+    // Remember the navigation controller
+    val navController = rememberNavController()
+    // Column layout to organize items vertically
     Column(
         modifier = Modifier
-            .fillMaxSize() // Fill the whole screen
-            .background(MaterialTheme.colorScheme.surface) // Set background color
+            .fillMaxSize()
+            .background(MaterialTheme.colorScheme.surface)
     ) {
-        // Add the header at the top
+        // Display the header
         Header(darkTheme = darkTheme, onThemeUpdated = onThemeUpdated)
-        Spacer(modifier = Modifier.height(10.dp)) // Add some space
-        // Add the user info screen below the header
-        UserInfoScreen(viewModel = viewModel)
+        Spacer(modifier = Modifier.height(10.dp))
+        // Display the navigation graph
+        AppNavGraph(
+            navController = navController,
+            userViewModel = userViewModel,
+            shiftViewModel = shiftViewModel,
+            settingsViewModel = settingsViewModel
+        )
     }
 }
 
 /**
- * Header part of the screen.
+ * Header part of the screen
  *
  * @param darkTheme Boolean indicating if dark theme should be used
  * @param onThemeUpdated Function that updates the theme
@@ -99,7 +118,7 @@ fun Header(darkTheme: Boolean, onThemeUpdated: () -> Unit) {
 }
 
 /**
- * Theme switcher button
+ * Theme switcher button.
  *
  * @param darkTheme Boolean indicating if dark theme should be used
  * @param size Size of the switcher
@@ -141,7 +160,7 @@ fun ThemeSwitcher(
         Box(
             modifier = Modifier
                 .size(size) // Set size
-                .offset(x = offset) // Set offset
+                .offset { IntOffset(x = offset.roundToPx(), y = 0) } // Set offset using lambda overload
                 .padding(all = padding) // Add padding
                 .clip(shape = toggleShape) // Clip to shape
                 .background(MaterialTheme.colorScheme.primary) // Set background color

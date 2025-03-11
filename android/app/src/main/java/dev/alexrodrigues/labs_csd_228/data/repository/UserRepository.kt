@@ -1,25 +1,44 @@
 package dev.alexrodrigues.labs_csd_228.data.repository
 
 import dev.alexrodrigues.labs_csd_228.data.User
+import kotlinx.coroutines.flow.MutableStateFlow
 
 /**
  * Repository class for managing user data
  */
-open class UserRepository {
-    private var currentUser = User(
-        id = "user1",
-        name = "John Doe",
-        email = "john@example.com",
-        phone = "123-456-7890",
-        accessibilityRequirements = listOf("High Contrast", "Screen Reader")
+class UserRepository {
+    private val user = mutableListOf(
+        User(
+            id = "user1",
+            name = "John Doe",
+            email = "john@example.com",
+            phone = "123-456-7890",
+            accessibilityRequirements = listOf("High Contrast", "Screen Reader")
+        ),
+        User(
+            id = "user2",
+            name = "Jane Smith",
+            email = "jane@example.com",
+            phone = "987-654-3210",
+            accessibilityRequirements = listOf("Large Text", "Voice Control")
+        )
     )
+
+    private var currentUserIndex = 0
 
     /**
      * Retrieves the current user
      *
      * @return The current user
      */
-    open suspend fun getUser(): User = currentUser
+    suspend fun getUser(): User = user[currentUserIndex]
+
+    /**
+     * Retrieves all users
+     *
+     * @return The list of all users
+     */
+    suspend fun getAllUsers(): List<User> = user
 
     /**
      * Updates the current user
@@ -29,13 +48,14 @@ open class UserRepository {
      * @param phone The new phone number of the user
      * @param accessibilityRequirements The new accessibility requirements of the user
      */
-    open suspend fun updateUser(
+    suspend fun updateUser(
         name: String? = null,
         email: String? = null,
         phone: String? = null,
         accessibilityRequirements: List<String>? = null
     ) {
-        currentUser = currentUser.copy(
+        val currentUser = user[currentUserIndex]
+        user[currentUserIndex] = currentUser.copy(
             name = name ?: currentUser.name,
             email = email ?: currentUser.email,
             phone = phone ?: currentUser.phone,

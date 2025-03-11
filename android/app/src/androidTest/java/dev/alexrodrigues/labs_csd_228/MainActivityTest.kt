@@ -17,6 +17,5 @@ class MainActivityTest {
     fun testMainScreen() {
         // Use the existing content set by MainActivity
         composeTestRule.onNodeWithText("App Header").assertExists()
-        composeTestRule.onNodeWithText("User Information").assertExists()
     }
 }

@@ -59,6 +59,7 @@ dependencies {
     implementation(libs.androidx.ui.test.junit4)
     implementation (libs.androidx.navigation.compose.v240alpha10)
     implementation(libs.androidx.navigation.testing)
+    implementation(libs.kotlinx.serialization.json)
     implementation(libs.androidx.runner)
     testImplementation(libs.junit)
     testImplementation(libs.androidx.core.testing)

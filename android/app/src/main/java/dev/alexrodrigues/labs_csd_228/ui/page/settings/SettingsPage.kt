@@ -14,20 +14,25 @@ import dev.alexrodrigues.labs_csd_228.ui.viewModel.SettingsViewModel
 /**
  * Displays the settings page
  *
- * @param navController The NavHostController used for navigation
- * @param settingsViewModel The ViewModel that provides the settings data
+ * @param popBackStack The function to pop the back stack
+ * @param navigateToShifts The function to navigate to the shifts page
+ * @param navigateToEmployees The function to navigate to the employees page
  */
 @Composable
-fun SettingsPage(navController: NavHostController, settingsViewModel: SettingsViewModel) {
+fun SettingsPage(
+    popBackStack: () -> Unit = {},
+    navigateToShifts: () -> Unit = {},
+    navigateToEmployees: () -> Unit = {},
+) {
     Column(modifier = Modifier.padding(10.dp).fillMaxSize()) {
         Row(modifier = Modifier.align(Alignment.CenterHorizontally)) {
             // Button to navigate to the shifts page
-            Button(onClick = { navController.navigate("shifts") }) {
+            Button(onClick = navigateToShifts) {
                 Text(text = "Go to Shifts")
             }
             Spacer(modifier = Modifier.padding(horizontal = 10.dp))
             // Button to navigate to the employees page
-            Button(onClick = { navController.navigate("employees") }) {
+            Button(onClick = navigateToEmployees) {
                 Text(text = "Go to Employees")
             }
         }

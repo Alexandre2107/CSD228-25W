@@ -11,16 +11,23 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import dev.alexrodrigues.labs_csd_228.ui.viewModel.UserViewModel
+import java.util.Stack
 
 /**
  * Displays the details of a specific employee
  *
- * @param navController The NavHostController used for navigation
+ * @param popBackStack The function to pop the back stack
  * @param employeeId The ID of the employee whose details are to be displayed
+ * @param navigateToEmployees The function to navigate to the employees list
  * @param viewModel The ViewModel that provides the employee data
  */
 @Composable
-fun EmployeeDetailsPage(navController: NavHostController, employeeId: String?, viewModel: UserViewModel) {
+fun EmployeeDetailsPage(
+    popBackStack: () -> Unit = {},
+    employeeId: String?,
+    navigateToEmployees : () -> Unit = {},
+    viewModel: UserViewModel,
+) {
     // Collect the list of users from the ViewModel
     val users by viewModel.users.collectAsState()
     // Find the user with the given employeeId
@@ -30,11 +37,12 @@ fun EmployeeDetailsPage(navController: NavHostController, employeeId: String?, v
 
     Column(modifier = Modifier.padding(16.dp)) {
         // Button to navigate back to the employees list
-        Button(onClick = { navController.navigate("employees") }) {
+        Button(onClick =  navigateToEmployees) {
             Text(text = "Go back to Employees")
         }
         user?.let {
             // Display user details
+
             Text(text = "Employee Details", color = MaterialTheme.colorScheme.onSurface)
             Text(text = "ID: ${it.id}", color = MaterialTheme.colorScheme.onSurface)
             Text(text = "Name: ${it.name}", color = MaterialTheme.colorScheme.onSurface)

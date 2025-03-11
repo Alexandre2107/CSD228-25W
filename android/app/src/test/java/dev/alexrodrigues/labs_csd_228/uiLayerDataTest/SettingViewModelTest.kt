@@ -2,7 +2,6 @@ package dev.alexrodrigues.labs_csd_228.ui.viewModel
 
 import dev.alexrodrigues.labs_csd_228.data.Settings
 import dev.alexrodrigues.labs_csd_228.data.repository.SettingsRepository
-import dev.alexrodrigues.labs_csd_228.ui.SettingsViewModel
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals

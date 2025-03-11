@@ -1,5 +1,6 @@
 package dev.alexrodrigues.labs_csd_228.ui
 
+import AppNavGraph
 import androidx.compose.animation.core.AnimationSpec
 import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.animation.core.tween

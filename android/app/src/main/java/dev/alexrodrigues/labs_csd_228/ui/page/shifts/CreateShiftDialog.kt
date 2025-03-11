@@ -7,23 +7,25 @@ import androidx.compose.material3.*
 /**
  * Displays a dialog for creating a new shift
  *
- * @param navController The NavHostController used for navigation
+ * @param popBackStack The function to pop the back stack
  */
 @Composable
-fun CreateShiftDialog(navController: NavHostController) {
+fun CreateShiftDialog(
+    popBackStack: () -> Unit = {}
+) {
     AlertDialog(
-        onDismissRequest = { navController.popBackStack() },
+        onDismissRequest =  popBackStack,
         title = { Text(text = "Create Shift") },
         text = { Text(text = "Shift creation form") },
         confirmButton = {
             // Button to confirm shift creation
-            Button(onClick = { navController.popBackStack() }) {
+            Button(onClick = popBackStack) {
                 Text("Create")
             }
         },
         dismissButton = {
             // Button to cancel shift creation
-            Button(onClick = { navController.popBackStack() }) {
+            Button(onClick = popBackStack) {
                 Text("Cancel")
             }
         }

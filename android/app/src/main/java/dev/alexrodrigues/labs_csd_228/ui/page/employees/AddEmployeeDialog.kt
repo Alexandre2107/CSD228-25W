@@ -7,23 +7,23 @@ import androidx.compose.material3.*
 /**
  * Displays a dialog for adding a new employee
  *
- * @param navController The NavHostController used for navigation
+ * @param popBackStack The function to pop the back stack
  */
 @Composable
-fun AddEmployeeDialog(navController: NavHostController) {
+fun AddEmployeeDialog(popBackStack: () -> Unit = {}) {
     AlertDialog(
-        onDismissRequest = { navController.popBackStack() },
+        onDismissRequest = popBackStack,
         title = { Text(text = "Add Employee") },
         text = { Text(text = "Employee creation form") },
         confirmButton = {
             // Button to confirm employee addition
-            Button(onClick = { navController.popBackStack() }) {
+            Button(onClick = popBackStack) {
                 Text("Add")
             }
         },
         dismissButton = {
             // Button to cancel employee addition
-            Button(onClick = { navController.popBackStack() }) {
+            Button(onClick = popBackStack ) {
                 Text("Cancel")
             }
         }

@@ -1,13 +1,14 @@
 package dev.alexrodrigues.labs_csd_228.data.repository
 
 import dev.alexrodrigues.labs_csd_228.data.Shift
+import kotlinx.coroutines.coroutineScope
 import java.time.Instant
 import java.time.Duration
 
 /**
  * Repository class for managing shifts
  */
-open class ShiftRepository {
+class ShiftRepository {
     private val shifts = mutableListOf(
         Shift(
             id = "shift1",
@@ -19,7 +20,7 @@ open class ShiftRepository {
         ),
         Shift(
             id = "shift2",
-            userId = "user1",
+            userId = "user2",
             startTime = Instant.now().plus(Duration.ofDays(1)),
             endTime = Instant.now().plus(Duration.ofDays(2) + Duration.ofHours(8)),
             location = "Remote",
@@ -32,15 +33,15 @@ open class ShiftRepository {
      *
      * @return A list of all shifts
      */
-    suspend fun getAllShifts(): List<Shift> = shifts
+    suspend fun getAllShifts(): List<Shift> = coroutineScope { shifts }
 
     /**
      * Retrieves upcoming shifts
      *
      * @return A list of upcoming shifts
      */
-    suspend fun getUpcomingShifts(): List<Shift> {
-        return shifts.filter { it.startTime > Instant.now() }
+    suspend fun getUpcomingShifts(): List<Shift> = coroutineScope {
+        shifts.filter { it.startTime > Instant.now() }
     }
 
     /**
@@ -48,7 +49,7 @@ open class ShiftRepository {
      *
      * @param shift The shift to update
      */
-    suspend fun updateShift(shift: Shift) {
+    suspend fun updateShift(shift: Shift): Unit  = coroutineScope {
         val index = shifts.indexOfFirst { it.id == shift.id }
         if (index != -1) {
             shifts[index] = shift

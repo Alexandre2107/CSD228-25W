@@ -47,3 +47,16 @@ data class Shift(
 data class Calendar(
     val shiftsByDate: Map<LocalDate, List<Shift>>
 )
+
+/**
+ * Data class representing the app settings.
+ *
+ * @property darkMode A boolean indicating if dark mode is enabled or not
+ */
+data class Settings(
+    val darkMode: Boolean,
+) {
+    companion object {
+        val DEFAULT = Settings(darkMode = false)
+    }
+}

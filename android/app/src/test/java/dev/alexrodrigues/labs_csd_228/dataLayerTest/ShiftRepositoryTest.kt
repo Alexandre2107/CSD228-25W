@@ -1,7 +1,7 @@
 package dev.alexrodrigues.labs_csd_228.data.repository
 
 import dev.alexrodrigues.labs_csd_228.data.Shift
-import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
@@ -18,19 +18,19 @@ class ShiftRepositoryTest {
     }
 
     @Test
-    fun testGetAllShifts() = runBlocking {
+    fun testGetAllShifts() = runTest {
         val shifts = shiftRepository.getAllShifts()
         assertEquals(2, shifts.size)
     }
 
     @Test
-    fun testGetUpcomingShifts() = runBlocking {
+    fun testGetUpcomingShifts() = runTest {
         val upcomingShifts = shiftRepository.getUpcomingShifts()
         assertEquals(1, upcomingShifts.size)
     }
 
     @Test
-    fun testUpdateShift() = runBlocking {
+    fun testUpdateShift() = runTest {
         val shift = Shift(
             id = "shift1",
             userId = "user1",

@@ -3,49 +3,45 @@ package dev.alexrodrigues.labs_csd_228
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
-import androidx.lifecycle.ViewModelProvider
-import dev.alexrodrigues.labs_csd_228.data.repository.UserRepository
-import dev.alexrodrigues.labs_csd_228.data.repository.CalendarRepository
-import dev.alexrodrigues.labs_csd_228.data.repository.ShiftRepository
-import dev.alexrodrigues.labs_csd_228.ui.MainScreen
-import dev.alexrodrigues.labs_csd_228.ui.MainViewModel
-import dev.alexrodrigues.labs_csd_228.ui.MainViewModelFactory
+import dev.alexrodrigues.labs_csd_228.data.repository.*
+import dev.alexrodrigues.labs_csd_228.ui.*
 import dev.alexrodrigues.labs_csd_228.ui.theme.ThemeSwitcherTheme
+import dev.alexrodrigues.labs_csd_228.ui.viewModel.*
 
 /**
- * Main activity of the application.
+ * Main activity of the app
  */
 class MainActivity : ComponentActivity() {
-    /**
-     * Called when the activity is starting.
-     *
-     * @param savedInstanceState If the activity is being re-initialized after previously being shut down then this Bundle contains the data it most recently supplied in onSaveInstanceState(Bundle)
-     */
+
+    // Repositories for user, shift, and settings data
+    private val userRepository = UserRepository()
+    private val shiftRepository = ShiftRepository()
+    private val settingsRepository = SettingsRepository()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            // State to manage the theme (dark or light)
-            var darkTheme by remember { mutableStateOf(false) }
+            // ViewModels for user, shift, and settings data
+            val userViewModel = UserViewModel(userRepository, shiftRepository)
+            val shiftViewModel = ShiftViewModel(shiftRepository)
+            val settingsViewModel = SettingsViewModel(settingsRepository)
 
-            // Apply the theme to the content
-            ThemeSwitcherTheme(darkTheme = darkTheme) {
-                // Initialize repositories
-                val userRepository = UserRepository()
-                val shiftRepository = ShiftRepository()
-                val calendarRepository = CalendarRepository(shiftRepository)
+            // Collect the settings state
+            val settings by settingsViewModel.settings.collectAsState()
 
-                // Create ViewModelFactory
-                val viewModelFactory = MainViewModelFactory(userRepository, shiftRepository, calendarRepository)
-
-                // Get ViewModel instance
-                val viewModel: MainViewModel = ViewModelProvider(this@MainActivity, viewModelFactory).get(MainViewModel::class.java)
-
-                // Set the main screen content
-                MainScreen(darkTheme = darkTheme, onThemeUpdated = { darkTheme = !darkTheme }, viewModel = viewModel)
+            // Set the theme and main screen content
+            ThemeSwitcherTheme(darkTheme = settings.darkMode) {
+                MainScreen(
+                    darkTheme = settings.darkMode,
+                    onThemeUpdated = {
+                        settingsViewModel.updateSettings(settings.copy(darkMode = !settings.darkMode))
+                    },
+                    userViewModel = userViewModel,
+                    shiftViewModel = shiftViewModel,
+                    settingsViewModel = settingsViewModel
+                )
             }
         }
     }

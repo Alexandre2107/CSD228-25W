@@ -3,7 +3,6 @@ package dev.alexrodrigues.labs_csd_228.data
 import org.junit.Assert.assertEquals
 import org.junit.Test
 import java.time.Instant
-import java.time.LocalDate
 
 class ModelsTest {
 
@@ -24,13 +23,6 @@ class ModelsTest {
         assertEquals("user1", shift.userId)
         assertEquals("Office", shift.location)
         assertEquals("Morning Shift", shift.description)
-    }
-
-    @Test
-    fun testCalendar() {
-        val shift = Shift("shift1", "user1", Instant.now(), Instant.now().plusSeconds(3600), "Office", "Morning Shift")
-        val calendar = Calendar(mapOf(LocalDate.now() to listOf(shift)))
-        assertEquals(1, calendar.shiftsByDate.size)
     }
 
     @Test

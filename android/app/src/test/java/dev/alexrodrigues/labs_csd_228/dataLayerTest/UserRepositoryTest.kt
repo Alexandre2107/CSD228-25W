@@ -1,43 +1,55 @@
-package dev.alexrodrigues.labs_csd_228.data.repository
+package dev.alexrodrigues.labs_csd_228.dataLayerTest
 
-import dev.alexrodrigues.labs_csd_228.data.User
+import dev.alexrodrigues.labs_csd_228.data.dao.UserDao
+import dev.alexrodrigues.labs_csd_228.data.entities.UserEntity
+import dev.alexrodrigues.labs_csd_228.data.repository.UserRepository
 import kotlinx.coroutines.test.runTest
-import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
+import org.mockito.Mockito.*
 
 class UserRepositoryTest {
 
+    private lateinit var userDao: UserDao
     private lateinit var userRepository: UserRepository
 
     @Before
     fun setUp() {
-        userRepository = UserRepository()
+        userDao = mock(UserDao::class.java)
+        userRepository = UserRepository(userDao)
     }
 
     @Test
-    fun testGetUser() = runTest {
-        val user = userRepository.getUser()
-        assertEquals("user1", user.id)
-        assertEquals("John Doe", user.name)
+    fun testGetAllUsers(): Unit = runTest {
+        userRepository.getAllUsers()
+        verify(userDao).getAllUsers()
     }
 
     @Test
-    fun testGetUser2() = runTest {
-        val currentUserIndexField = UserRepository::class.java.getDeclaredField("currentUserIndex")
-        currentUserIndexField.isAccessible = true
-        currentUserIndexField.setInt(userRepository, 1)
-
-        val user = userRepository.getUser()
-        assertEquals("user2", user.id)
-        assertEquals("Jane Smith", user.name)
+    fun testInsertUser() = runTest {
+        val user = UserEntity("user1", "John Doe", "john@example.com", "1234567890", "None")
+        userRepository.insertUser(user)
+        verify(userDao).insertUser(user)
     }
 
     @Test
     fun testUpdateUser() = runTest {
-        userRepository.updateUser(name = "Jane Doe", email = "jane@example.com")
-        val updatedUser = userRepository.getUser()
-        assertEquals("Jane Doe", updatedUser.name)
-        assertEquals("jane@example.com", updatedUser.email)
+        val user = UserEntity("user1", "John Doe", "john@example.com", "1234567890", "None")
+        userRepository.updateUser(user)
+        verify(userDao).updateUser(user)
+    }
+
+    @Test
+    fun testDeleteUser() = runTest {
+        val user = UserEntity("user1", "John Doe", "john@example.com", "1234567890", "None")
+        userRepository.deleteUser(user)
+        verify(userDao).deleteUser(user)
+    }
+
+    @Test
+    fun testGetNextUserId() = runTest {
+        `when`(userDao.getAllUsers()).thenReturn(listOf(UserEntity("user1", "John Doe", "john@example.com", "1234567890", "None")))
+        val nextUserId = userRepository.getNextUserId()
+        assert(nextUserId == "user2")
     }
 }

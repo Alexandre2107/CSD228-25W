@@ -1,47 +1,55 @@
-package dev.alexrodrigues.labs_csd_228.data.repository
+package dev.alexrodrigues.labs_csd_228.dataLayerTest
 
-import dev.alexrodrigues.labs_csd_228.data.Shift
+import dev.alexrodrigues.labs_csd_228.data.dao.ShiftDao
+import dev.alexrodrigues.labs_csd_228.data.entities.ShiftEntity
+import dev.alexrodrigues.labs_csd_228.data.repository.ShiftRepository
 import kotlinx.coroutines.test.runTest
-import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
-import java.time.Duration
-import java.time.Instant
+import org.mockito.Mockito.*
 
 class ShiftRepositoryTest {
 
+    private lateinit var shiftDao: ShiftDao
     private lateinit var shiftRepository: ShiftRepository
 
     @Before
     fun setUp() {
-        shiftRepository = ShiftRepository()
+        shiftDao = mock(ShiftDao::class.java)
+        shiftRepository = ShiftRepository(shiftDao)
     }
 
     @Test
-    fun testGetAllShifts() = runTest {
-        val shifts = shiftRepository.getAllShifts()
-        assertEquals(2, shifts.size)
+    fun testGetAllShifts(): Unit = runTest {
+        shiftRepository.getAllShifts()
+        verify(shiftDao).getAllShifts()
     }
 
     @Test
-    fun testGetUpcomingShifts() = runTest {
-        val upcomingShifts = shiftRepository.getUpcomingShifts()
-        assertEquals(1, upcomingShifts.size)
+    fun testInsertShift() = runTest {
+        val shift = ShiftEntity("shift1", "user1", 1620000000000, 1620003600000, "Office", "Morning shift")
+        shiftRepository.insertShift(shift)
+        verify(shiftDao).insertShift(shift)
     }
 
     @Test
     fun testUpdateShift() = runTest {
-        val shift = Shift(
-            id = "shift1",
-            userId = "user1",
-            startTime = Instant.now(),
-            endTime = Instant.now().plus(Duration.ofDays(1) + Duration.ofHours(8)),
-            location = "Updated Office",
-            description = "Updated Morning Shift"
-        )
+        val shift = ShiftEntity("shift1", "user1", 1620000000000, 1620003600000, "Office", "Morning shift")
         shiftRepository.updateShift(shift)
-        val updatedShift = shiftRepository.getAllShifts().first { it.id == "shift1" }
-        assertEquals("Updated Office", updatedShift.location)
-        assertEquals("Updated Morning Shift", updatedShift.description)
+        verify(shiftDao).updateShift(shift)
+    }
+
+    @Test
+    fun testDeleteShift() = runTest {
+        val shift = ShiftEntity("shift1", "user1", 1620000000000, 1620003600000, "Office", "Morning shift")
+        shiftRepository.deleteShift(shift)
+        verify(shiftDao).deleteShift(shift)
+    }
+
+    @Test
+    fun testGetNextShiftId() = runTest {
+        `when`(shiftDao.getAllShifts()).thenReturn(listOf(ShiftEntity("shift1", "user1", 1620000000000, 1620003600000, "Office", "Morning shift")))
+        val nextShiftId = shiftRepository.getNextShiftId()
+        assert(nextShiftId == "shift2")
     }
 }

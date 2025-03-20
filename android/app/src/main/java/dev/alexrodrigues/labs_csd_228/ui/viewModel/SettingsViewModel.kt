@@ -1,25 +1,32 @@
 package dev.alexrodrigues.labs_csd_228.ui.viewModel
 
+import android.content.Context
 import androidx.lifecycle.ViewModel
-import dev.alexrodrigues.labs_csd_228.data.Settings
-import dev.alexrodrigues.labs_csd_228.data.repository.SettingsRepository
-import kotlinx.coroutines.flow.StateFlow
+import androidx.lifecycle.viewModelScope
+import dev.alexrodrigues.labs_csd_228.SettingsProto
+import dev.alexrodrigues.labs_csd_228.data.settingsDataStore
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.launch
 
 /**
- * ViewModel for managing settings data
- *
- * @property settingsRepository The repository that provides settings data
+ * ViewModel for settings data
+ * @param context The application context
  */
-class SettingsViewModel(private val settingsRepository: SettingsRepository) : ViewModel() {
-    // StateFlow to hold the settings data
-    val settings: StateFlow<Settings> = settingsRepository.settings
+class SettingsViewModel(context: Context) : ViewModel() {
+    private val dataStore = context.settingsDataStore
+
+    // Flow of settings data
+    val settings: Flow<SettingsProto.Settings> = dataStore.data
 
     /**
-     * Updates the settings with new values.
-     *
-     * @param newSettings The new settings to be applied.
+     * Update settings
+     * @param darkMode The new dark mode setting
      */
-    fun updateSettings(newSettings: Settings) {
-        settingsRepository.updateSettings(newSettings)
+    fun updateSettings(darkMode: Boolean) {
+        viewModelScope.launch {
+            dataStore.updateData { currentSettings ->
+                currentSettings.toBuilder().setDarkMode(darkMode).build()
+            }
+        }
     }
 }

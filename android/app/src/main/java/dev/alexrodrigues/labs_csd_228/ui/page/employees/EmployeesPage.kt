@@ -61,16 +61,20 @@ fun EmployeesPage(
         // Text to display the title of the employees list
         Text(text = "Employees List", color = MaterialTheme.colorScheme.onSurface)
 
-        // Loop through the list of users and display their details
+        // Loop through the list of users and display their details, and lets the user to be deleted
         users.forEach { user ->
-            // Display the user's name, email, and phone
             Text(text = "Name: ${user.name}, Email: ${user.email}, Phone: ${user.phone}", color = MaterialTheme.colorScheme.onSurface)
-            // Spacer to add vertical space between user details and button
             Spacer(modifier = Modifier.height(8.dp))
-            // Button to navigate to the details of the selected employee
-            Button(onClick = { onSelectUser(user.id) }, modifier = Modifier.testTag("GoToEmployeeDetailsButton_${user.id}")) {
-                Text(text = "Go to Employee Details_${user.id}")
+            Row {
+                Button(onClick = { onSelectUser(user.id) }, modifier = Modifier.testTag("GoToEmployeeDetailsButton_${user.id}")) {
+                    Text(text = "Go to Employee Details_${user.id}")
+                }
+                Spacer(modifier = Modifier.width(8.dp))
+                Button(onClick = { viewModel.deleteUser(user) }, modifier = Modifier.testTag("DeleteEmployeeButton_${user.id}")) {
+                    Text(text = "Delete")
+                }
             }
+            Spacer(modifier = Modifier.height(8.dp))
         }
 
         // Spacer to add vertical space

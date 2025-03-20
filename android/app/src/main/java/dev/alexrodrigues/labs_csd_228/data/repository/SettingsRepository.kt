@@ -1,24 +1,26 @@
 package dev.alexrodrigues.labs_csd_228.data.repository
 
-import dev.alexrodrigues.labs_csd_228.data.Settings
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
+import android.content.Context
+import dev.alexrodrigues.labs_csd_228.SettingsProto
+import dev.alexrodrigues.labs_csd_228.data.settingsDataStore
+import kotlinx.coroutines.flow.Flow
 
 /**
- * Repository for managing settings data
+ * Repository for settings data
  */
-class SettingsRepository {
-    // Mutable state flow for settings data
-    private val _settings = MutableStateFlow(Settings(darkMode = false))
-    // State flow for settings data
-    val settings: StateFlow<Settings> = _settings
+class SettingsRepository(context: Context) {
+    private val dataStore = context.settingsDataStore
 
     /**
-     * Update the settings data
-     *
-     * @param newSettings New settings data
+     * Flow of settings data
      */
-    fun updateSettings(newSettings: Settings) {
-        _settings.value = newSettings
+    val settings: Flow<SettingsProto.Settings> = dataStore.data
+
+    /**
+     * Update settings
+     * @param newSettings The new settings to update
+     */
+    suspend fun updateSettings(newSettings: SettingsProto.Settings) {
+        dataStore.updateData { newSettings }
     }
 }

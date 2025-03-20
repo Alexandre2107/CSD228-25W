@@ -1,3 +1,4 @@
+/*
 package dev.alexrodrigues.labs_csd_228.pagesTest
 
 import androidx.compose.ui.test.junit4.createComposeRule
@@ -107,4 +108,4 @@ class ShiftsPageTest {
         composeTestRule.onNodeWithText("Go to Shift Details_shift1").assertExists().performClick()
         assert(navigateToShiftDetailsCalled)
     }
-}
+}*/

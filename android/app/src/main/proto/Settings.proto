@@ -1,0 +1,8 @@
+syntax = "proto3";
+
+option java_package = "dev.alexrodrigues.labs_csd_228";
+option java_outer_classname = "SettingsProto";
+
+message Settings {
+  bool dark_mode = 1;
+}

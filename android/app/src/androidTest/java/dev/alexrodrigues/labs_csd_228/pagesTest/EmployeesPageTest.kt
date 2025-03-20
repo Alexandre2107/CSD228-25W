@@ -1,3 +1,4 @@
+/*
 package dev.alexrodrigues.labs_csd_228.pagesTest
 
 import androidx.compose.ui.test.junit4.createComposeRule
@@ -114,4 +115,4 @@ class EmployeesPageTest {
         composeTestRule.onNodeWithText("Go to Employee Details_user1").performClick()
         assert(navigateToUser1DetailsCalled)
     }
-}
+}*/

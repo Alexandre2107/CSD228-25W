@@ -9,7 +9,6 @@ import XCTest
 @testable import lab5
 
 final class ShiftRepositoryTests: XCTestCase {
-
     var shiftRepository: ShiftRepository!
 
     override func setUpWithError() throws {

@@ -7,9 +7,12 @@
 
 import XCTest
 @testable import lab5
+import SwiftUI
 
 class ThemeSwitcherViewTests: XCTestCase {
+    
     var settings: Settings!
+    @Environment(\.colorScheme) private var scheme
 
     override func setUp() {
         super.setUp()
@@ -22,7 +25,7 @@ class ThemeSwitcherViewTests: XCTestCase {
     }
 
     func testThemeSwitcherView() {
-        let view = ThemeSwitcherView(settings: settings)
+        let view = ThemeSwitcherView(scheme: scheme)
         XCTAssertNotNil(view)
     }
 

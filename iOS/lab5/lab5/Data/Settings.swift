@@ -5,6 +5,7 @@
 //  Created by Alexandre Rodrigues on 02/04/25.
 //
 
+// Settings.swift
 import Foundation
 import Combine
 import SwiftUI
@@ -20,8 +21,22 @@ enum Theme: String, CaseIterable {
     case systemDefault = "Default"
     case light = "Light"
     case dark = "Dark"
+    
+    /// Returns the color associated with the theme.
+    /// - Parameter scheme: The current color scheme
+    /// - Returns: The color for the theme
+    func color(_ scheme: ColorScheme) -> Color {
+        switch self {
+        case .systemDefault:
+            return scheme == .dark ? Color.moonColor : Color.sunColor
+        case .light:
+            return Color.sunColor
+        case .dark:
+            return Color.moonColor
+        }
+    }
 
-    /// Property that eturns the corresponding `ColorScheme` for each theme.
+    /// Returns the color scheme associated with the theme
     var colorScheme: ColorScheme? {
         switch self {
         case .systemDefault:

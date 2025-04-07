@@ -9,7 +9,6 @@ import XCTest
 @testable import lab5
 
 final class EmployeeRepositoryTests: XCTestCase {
-
     var employeeRepository: EmployeeRepository!
 
     override func setUpWithError() throws {

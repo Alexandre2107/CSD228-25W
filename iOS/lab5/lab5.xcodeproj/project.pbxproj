@@ -34,15 +34,41 @@
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				ContentView.swift,
+				Data/Color.swift,
 				Data/Employee.swift,
 				Data/Settings.swift,
 				Data/Shift.swift,
-				Views/EmployeeView.swift,
-				Views/ThemeSwitcherView.swift,
-				Views/UpcomingShiftsView.swift,
-				Views/WorkedShiftsView.swift,
+				Views/EmployeeViews/EmployeeDetailView.swift,
+				Views/EmployeeViews/EmployeeListView.swift,
+				Views/EmployeeViews/EmployeeView.swift,
+				Views/SettingsViews/SettingsView.swift,
+				Views/SettingsViews/ThemeSwitcherView.swift,
+				Views/ShiftsView/ShiftDetailView.swift,
+				Views/ShiftsView/ShiftsListView.swift,
+				Views/ShiftsView/UpcomingShiftsView.swift,
+				Views/ShiftsView/WorkedShiftsView.swift,
 			);
 			target = 51D5A5312D9367E0000B8495 /* lab5UITests */;
+		};
+		5112083D2DA08848000E745C /* Exceptions for "lab5" folder in "lab5Tests" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				ContentView.swift,
+				Data/Color.swift,
+				Data/Employee.swift,
+				Data/Settings.swift,
+				Data/Shift.swift,
+				Views/EmployeeViews/EmployeeDetailView.swift,
+				Views/EmployeeViews/EmployeeListView.swift,
+				Views/EmployeeViews/EmployeeView.swift,
+				Views/SettingsViews/SettingsView.swift,
+				Views/SettingsViews/ThemeSwitcherView.swift,
+				Views/ShiftsView/ShiftDetailView.swift,
+				Views/ShiftsView/ShiftsListView.swift,
+				Views/ShiftsView/UpcomingShiftsView.swift,
+				Views/ShiftsView/WorkedShiftsView.swift,
+			);
+			target = 51D5A5272D9367E0000B8495 /* lab5Tests */;
 		};
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
@@ -50,6 +76,7 @@
 		51D5A51A2D9367DF000B8495 /* lab5 */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			exceptions = (
+				5112083D2DA08848000E745C /* Exceptions for "lab5" folder in "lab5Tests" target */,
 				511205C92DA0570F000E745C /* Exceptions for "lab5" folder in "lab5UITests" target */,
 			);
 			path = lab5;
@@ -215,6 +242,9 @@
 			);
 			mainGroup = 51D5A50F2D9367DF000B8495;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				511208BC2DA09561000E745C /* XCRemoteSwiftPackageReference "ViewInspector" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 51D5A5192D9367DF000B8495 /* Products */;
 			projectDirPath = "";
@@ -578,6 +608,17 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		511208BC2DA09561000E745C /* XCRemoteSwiftPackageReference "ViewInspector" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/nalexn/ViewInspector";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.10.1;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
 	};
 	rootObject = 51D5A5102D9367DF000B8495 /* Project object */;
 }

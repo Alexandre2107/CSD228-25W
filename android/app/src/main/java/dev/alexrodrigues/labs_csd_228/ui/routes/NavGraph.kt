@@ -8,7 +8,6 @@ import androidx.navigation.navigation
 import dev.alexrodrigues.labs_csd_228.ui.page.employees.*
 import dev.alexrodrigues.labs_csd_228.ui.page.settings.SettingsPage
 import dev.alexrodrigues.labs_csd_228.ui.page.shifts.*
-import dev.alexrodrigues.labs_csd_228.ui.routes.*
 import dev.alexrodrigues.labs_csd_228.ui.viewModel.*
 
 @Composable
@@ -54,7 +53,10 @@ fun AppNavGraph(
             }
             // Define the dialog for creating a new shift
             dialog(CreateShiftRoute::class.java.name) {
-                CreateShiftDialog(popBackStack = { navController.popBackStack() })
+                CreateShiftDialog(
+                    popBackStack = { navController.popBackStack() },
+                    viewModel = shiftViewModel
+                )
             }
         }
 
@@ -83,7 +85,10 @@ fun AppNavGraph(
             }
             // Define the dialog for adding a new employee
             dialog(AddEmployeeRoute::class.java.name) {
-                AddEmployeeDialog(popBackStack = { navController.popBackStack() })
+                AddEmployeeDialog(
+                    popBackStack = { navController.popBackStack() },
+                    viewModel = userViewModel
+                )
             }
         }
     }

@@ -1,58 +1,47 @@
 package dev.alexrodrigues.labs_csd_228.data.repository
 
-import dev.alexrodrigues.labs_csd_228.data.Shift
-import kotlinx.coroutines.coroutineScope
-import java.time.Instant
-import java.time.Duration
+import dev.alexrodrigues.labs_csd_228.data.dao.ShiftDao
+import dev.alexrodrigues.labs_csd_228.data.entities.ShiftEntity
 
 /**
- * Repository class for managing shifts
+ * Repository for shift data
  */
-class ShiftRepository {
-    private val shifts = mutableListOf(
-        Shift(
-            id = "shift1",
-            userId = "user1",
-            startTime = Instant.now(),
-            endTime = Instant.now().plus(Duration.ofDays(1) + Duration.ofHours(8)),
-            location = "Office",
-            description = "Morning Shift"
-        ),
-        Shift(
-            id = "shift2",
-            userId = "user2",
-            startTime = Instant.now().plus(Duration.ofDays(1)),
-            endTime = Instant.now().plus(Duration.ofDays(2) + Duration.ofHours(8)),
-            location = "Remote",
-            description = "Remote Work"
-        )
-    )
-
+class ShiftRepository(private val shiftDao: ShiftDao) {
     /**
-     * Retrieves all shifts
-     *
-     * @return A list of all shifts
+     * Get all shifts
      */
-    suspend fun getAllShifts(): List<Shift> = coroutineScope { shifts }
+    suspend fun getAllShifts(): List<ShiftEntity> = shiftDao.getAllShifts()
 
     /**
-     * Retrieves upcoming shifts
-     *
-     * @return A list of upcoming shifts
+     * Insert a shift
+     * @param shift The shift to insert
      */
-    suspend fun getUpcomingShifts(): List<Shift> = coroutineScope {
-        shifts.filter { it.startTime > Instant.now() }
-    }
+    suspend fun insertShift(shift: ShiftEntity) = shiftDao.insertShift(shift)
 
     /**
-     * Updates a shift
-     *
+     * Update a shift
      * @param shift The shift to update
      */
-    suspend fun updateShift(shift: Shift): Unit  = coroutineScope {
-        val index = shifts.indexOfFirst { it.id == shift.id }
-        if (index != -1) {
-            shifts[index] = shift
-        }
+    suspend fun updateShift(shift: ShiftEntity) = shiftDao.updateShift(shift)
+
+    /**
+     * Get shifts for a specific user
+     * @param userId The ID of the user
+     */
+    suspend fun getShiftsForUser(userId: String): List<ShiftEntity> = shiftDao.getShiftsForUser(userId)
+
+    /**
+     * Delete a shift
+     * @param shift The shift to delete
+     */
+    suspend fun deleteShift(shift: ShiftEntity) = shiftDao.deleteShift(shift)
+
+    /**
+     * Get the next shift ID
+     */
+    suspend fun getNextShiftId(): String {
+        val shifts = shiftDao.getAllShifts()
+        val maxId = shifts.mapNotNull { it.id.removePrefix("shift").toIntOrNull() }.maxOrNull() ?: 0
+        return "shift${maxId + 1}"
     }
 }

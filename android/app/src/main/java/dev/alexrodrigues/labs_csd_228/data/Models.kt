@@ -40,15 +40,6 @@ data class Shift(
 )
 
 /**
- * Data class representing a Calendar.
- *
- * @property shiftsByDate A map of shifts grouped by date
- */
-data class Calendar(
-    val shiftsByDate: Map<LocalDate, List<Shift>>
-)
-
-/**
  * Data class representing the app settings.
  *
  * @property darkMode A boolean indicating if dark mode is enabled or not

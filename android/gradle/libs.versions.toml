@@ -10,6 +10,7 @@ core = "1.6.1"
 coreKtxVersion = "1.10.0"
 coreTesting = "2.2.0"
 datastorePreferences = "1.1.2"
+datastorePreferencesVersion = "1.0.0"
 espressoCoreVersion = "3.4.0"
 kotlin = "2.0.0"
 coreKtx = "1.10.1"
@@ -33,7 +34,9 @@ mockitoInline = "4.0.0"
 mockitoKotlin = "4.1.0"
 navigationCompose = "2.8.6"
 navigationComposeVersion = "2.4.0-alpha10"
+protobufKotlinLite = "3.21.7"
 robolectric = "4.9"
+roomRuntime = "2.6.1"
 uiTestJunit4 = "1.7.8"
 uiTestJunit4Version = "<version>"
 uiTestManifest = "1.7.8"
@@ -41,6 +44,8 @@ uiTestManifestVersion = "<version>"
 uiTooling = "1.7.8"
 navigationTesting = "2.8.8"
 runner = "1.6.2"
+roomCommon = "2.6.1"
+roomKtx = "2.6.1"
 
 [libraries]
 androidx-activity-compose-v172 = { module = "androidx.activity:activity-compose", version.ref = "activityComposeVersion" }
@@ -50,13 +55,16 @@ androidx-core = { module = "androidx.test:core", version.ref = "core" }
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
 androidx-core-ktx-v1100 = { module = "androidx.core:core-ktx", version.ref = "coreKtxVersion" }
 androidx-core-testing = { module = "androidx.arch.core:core-testing", version.ref = "coreTesting" }
+androidx-datastore = { module = "androidx.datastore:datastore", version.ref = "datastorePreferencesVersion" }
 androidx-datastore-preferences = { module = "androidx.datastore:datastore-preferences", version.ref = "datastorePreferences" }
+androidx-datastore-preferences-v100 = { module = "androidx.datastore:datastore-preferences", version.ref = "datastorePreferencesVersion" }
 androidx-espresso-core-v340 = { module = "androidx.test.espresso:espresso-core", version.ref = "espressoCoreVersion" }
 androidx-junit-v121 = { module = "androidx.test.ext:junit", version.ref = "androidxJunit" }
 androidx-lifecycle-runtime-ktx-v262 = { module = "androidx.lifecycle:lifecycle-runtime-ktx", version.ref = "lifecycleRuntimeKtxVersion" }
 androidx-lifecycle-viewmodel-compose = { module = "androidx.lifecycle:lifecycle-viewmodel-compose", version.ref = "lifecycleViewmodelCompose" }
 androidx-navigation-compose = { module = "androidx.navigation:navigation-compose", version.ref = "navigationCompose" }
 androidx-navigation-compose-v240alpha10 = { module = "androidx.navigation:navigation-compose", version.ref = "navigationComposeVersion" }
+androidx-room-runtime = { module = "androidx.room:room-runtime", version.ref = "roomRuntime" }
 androidx-ui-test-junit4-vversion = { module = "androidx.compose.ui:ui-test-junit4", version.ref = "uiTestJunit4Version" }
 androidx-ui-test-manifest-vversion = { module = "androidx.compose.ui:ui-test-manifest", version.ref = "uiTestManifestVersion" }
 byte-buddy = { module = "net.bytebuddy:byte-buddy", version.ref = "byteBuddy" }
@@ -84,12 +92,15 @@ mockito-core = { module = "org.mockito:mockito-core", version.ref = "mockitoCore
 mockito-core-v4110 = { module = "org.mockito:mockito-core", version.ref = "mockitoCoreVersion" }
 mockito-inline = { module = "org.mockito:mockito-inline", version.ref = "mockitoInline" }
 mockito-kotlin = { module = "org.mockito.kotlin:mockito-kotlin", version.ref = "mockitoKotlin" }
+protobuf-kotlin-lite = { module = "com.google.protobuf:protobuf-kotlin-lite", version.ref = "protobufKotlinLite" }
 robolectric = { module = "org.robolectric:robolectric", version.ref = "robolectric" }
 ui-test-junit4 = { module = "androidx.compose.ui:ui-test-junit4", version.ref = "uiTestJunit4" }
 ui-test-manifest = { module = "androidx.compose.ui:ui-test-manifest", version.ref = "uiTestManifest" }
 ui-tooling = { module = "androidx.compose.ui:ui-tooling", version.ref = "uiTooling" }
 androidx-navigation-testing = { group = "androidx.navigation", name = "navigation-testing", version.ref = "navigationTesting" }
 androidx-runner = { group = "androidx.test", name = "runner", version.ref = "runner" }
+androidx-room-common = { group = "androidx.room", name = "room-common", version.ref = "roomCommon" }
+androidx-room-ktx = { group = "androidx.room", name = "room-ktx", version.ref = "roomKtx" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

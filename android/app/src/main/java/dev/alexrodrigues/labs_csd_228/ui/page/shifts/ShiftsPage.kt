@@ -55,16 +55,20 @@ fun ShiftsPage(
         // Text to display the title of the shifts list
         Text(text = "Shifts List", color = MaterialTheme.colorScheme.onSurface)
 
-        // Loop through the list of shifts and display their details
+        // Loop through the list of shifts and display their details, and delete them
         shifts.forEach { shift ->
-            // Display the shift's ID, location, and description
             Text(text = "Shift ID: ${shift.id}, Location: ${shift.location}, Description: ${shift.description}", color = MaterialTheme.colorScheme.onSurface)
-            // Spacer to add vertical space between shift details and button
             Spacer(modifier = Modifier.height(8.dp))
-            // Button to navigate to the details of the selected shift
-            Button(onClick = { onSelectShift(shift.id) }) {
-                Text(text = "Go to Shift Details_${shift.id}")
+            Row {
+                Button(onClick = { onSelectShift(shift.id) }) {
+                    Text(text = "Go to Shift Details_${shift.id}")
+                }
+                Spacer(modifier = Modifier.width(8.dp))
+                Button(onClick = { viewModel.deleteShift(shift) }) {
+                    Text(text = "Delete")
+                }
             }
+            Spacer(modifier = Modifier.height(8.dp))
         }
 
         // Spacer to add vertical space

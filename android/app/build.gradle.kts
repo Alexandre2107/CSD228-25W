@@ -2,6 +2,8 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
+    id("org.jetbrains.kotlin.kapt")
+    id("com.google.protobuf") version "0.9.4"
 }
 
 android {
@@ -28,16 +30,16 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_11
-        targetCompatibility = JavaVersion.VERSION_11
+        sourceCompatibility = JavaVersion.VERSION_21
+        targetCompatibility = JavaVersion.VERSION_21
     }
     kotlinOptions {
-        jvmTarget = "11"
+        jvmTarget = "21"
+        languageVersion = "1.9"
     }
     buildFeatures {
         compose = true
     }
-
 }
 
 dependencies {
@@ -57,37 +59,68 @@ dependencies {
     implementation(libs.kotlinx.coroutines.core)
     implementation(libs.androidx.activity.compose.v172)
     implementation(libs.androidx.ui.test.junit4)
-    implementation (libs.androidx.navigation.compose.v240alpha10)
+    implementation(libs.androidx.navigation.compose.v240alpha10)
     implementation(libs.androidx.navigation.testing)
     implementation(libs.kotlinx.serialization.json)
     implementation(libs.androidx.runner)
+    implementation(libs.kotlin.stdlib)
+    implementation(libs.androidx.core.ktx.v1100)
+    implementation(libs.androidx.appcompat)
+    implementation(libs.material)
+    implementation(libs.androidx.constraintlayout)
+    implementation(libs.androidx.datastore.preferences.v100)
+    implementation(libs.androidx.datastore)
+    implementation(libs.protobuf.kotlin.lite)
+    implementation(libs.androidx.room.common)
+    implementation(libs.androidx.room.ktx)
+    implementation(libs.androidx.room.runtime)
+    kapt("androidx.room:room-compiler:2.6.1")
+    testImplementation (libs.mockito.core.v4110)
+    testImplementation (libs.mockito.inline)
+
+    testFixtures(libs.junit)
+
     testImplementation(libs.junit)
     testImplementation(libs.androidx.core.testing)
-    testFixtures(libs.junit)
     testImplementation(libs.mockito.core)
     testImplementation(libs.mockito.inline)
     testImplementation(libs.mockito.core.v4110)
     testImplementation(libs.mockito.kotlin)
     testImplementation(libs.kotlinx.coroutines.test)
     testImplementation(libs.byte.buddy)
-    testImplementation (libs.robolectric)
-    testImplementation (libs.androidx.core)
-    testImplementation (libs.androidx.junit.v121)
+    testImplementation(libs.robolectric)
+    testImplementation(libs.androidx.core)
+    testImplementation(libs.androidx.junit.v121)
+    testImplementation(libs.junit)
+
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(platform(libs.androidx.compose.bom))
     androidTestImplementation(libs.androidx.ui.test.junit4)
-    debugImplementation(libs.androidx.ui.tooling)
-    debugImplementation(libs.androidx.ui.test.manifest)
     androidTestImplementation(libs.junit.v113)
     androidTestImplementation(libs.ui.test.junit4)
+    androidTestImplementation(libs.androidx.ui.test.junit4.vversion)
+
+    debugImplementation(libs.androidx.ui.tooling)
+    debugImplementation(libs.androidx.ui.test.manifest)
     debugImplementation(libs.ui.tooling)
     debugImplementation(libs.ui.test.manifest)
-    implementation (libs.kotlin.stdlib)
-    implementation (libs.androidx.core.ktx.v1100)
-    implementation (libs.androidx.appcompat)
-    implementation (libs.material)
-    implementation (libs.androidx.constraintlayout)
-    testImplementation (libs.junit)
-    androidTestImplementation (libs.androidx.ui.test.junit4.vversion)
-    debugImplementation (libs.androidx.ui.test.manifest.vversion)
+    debugImplementation(libs.androidx.ui.test.manifest.vversion)
+}
+
+protobuf {
+    protoc {
+        artifact = "com.google.protobuf:protoc:3.21.7"
+    }
+    generateProtoTasks {
+        all().forEach { task ->
+            task.builtins {
+                create("kotlin") {
+                    option("lite")
+                }
+                create("java") {
+                    option("lite")
+                }
+            }
+        }
+    }
 }

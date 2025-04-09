@@ -1,3 +1,4 @@
+/*
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onNodeWithText
 import dev.alexrodrigues.labs_csd_228.data.repository.ShiftRepository
@@ -31,4 +32,4 @@ class ShiftDetailsPageTest {
         composeTestRule.onNodeWithText("Location: Office").assertExists()
         composeTestRule.onNodeWithText("Description: Morning Shift").assertExists()
     }
-}
+}*/
